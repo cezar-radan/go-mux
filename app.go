@@ -15,13 +15,21 @@ type App struct {
 }
 
 func (a *App) Initialize(user, password, dbname string) {
-	connectionString := fmt.Sprintf("user=%s password=%s dbname=%s sslmode=disable", user, password, dbname)
+	connectionString := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
 	var err error
 	a.DB, err = sql.Open("postgres", connectionString)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	defer a.DB.Close()
+
+	err = a.DB.Ping()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("DB connection. Successfully!")
 
 	a.Router = mux.NewRouter()
 }
