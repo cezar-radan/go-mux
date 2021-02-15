@@ -11,6 +11,6 @@ const (
 func main() {
 
 	a := App{}
-	a.Initialize(user, password, dbname)
+	a.Initialize(host, port, user, password, dbname)
 	a.Run(":8010")
 }

@@ -14,7 +14,7 @@ type App struct {
 	DB     *sql.DB
 }
 
-func (a *App) Initialize(user, password, dbname string) {
+func (a *App) Initialize(host string, port int, user string, password string, dbname string) {
 	connectionString := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
 	var err error
@@ -23,13 +23,13 @@ func (a *App) Initialize(user, password, dbname string) {
 		log.Fatal(err)
 	}
 
-	defer a.DB.Close()
-
-	err = a.DB.Ping()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println("DB connection. Successfully!")
+	/*
+		err = a.DB.Ping()
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println("DB connection. Successfully!")
+	*/
 
 	a.Router = mux.NewRouter()
 }
